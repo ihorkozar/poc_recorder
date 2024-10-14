@@ -240,17 +240,16 @@ class MainFlutterWindow: NSWindow, SCStreamDelegate, SCStreamOutput {
             assertionFailure("unknown stream type")
         }
     }
-}
-
-func stream(_ stream: SCStream, didStopWithError error: Error) { // stream error
-    print("closing stream with error:\n", error,
-          "\nthis might be due to the window closing or the user stopping from the sonoma ui")
-    DispatchQueue.main.async {
-        self.stream = nil
-        self.stopRecording()
+    
+    func stream(_ stream: SCStream, didStopWithError error: Error) { // stream error
+        print("closing stream with error:\n", error,
+              "\nthis might be due to the window closing or the user stopping from the sonoma ui")
+        DispatchQueue.main.async {
+            self.stream = nil
+            self.stopRecording()
+        }
     }
 }
-
 
 // https://developer.apple.com/documentation/screencapturekit/capturing_screen_content_in_macos
 // For Sonoma updated to https://developer.apple.com/forums/thread/727709
