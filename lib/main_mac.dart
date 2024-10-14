@@ -25,14 +25,10 @@ class AudioRecorderScreen extends StatefulWidget {
 
 class AudioRecorderScreenState extends State<AudioRecorderScreen> {
   static const _channel = MethodChannel('screenCaptureChannel');
-  bool isRecording = false;
 
   Future<void> _start() async {
     try {
       await _channel.invokeMethod('start');
-      setState(() {
-        isRecording = true;
-      });
     } on PlatformException catch (e) {
       print("Failed to start recording: ${e.message}");
     }
@@ -41,9 +37,6 @@ class AudioRecorderScreenState extends State<AudioRecorderScreen> {
   Future<void> _stop() async {
     try {
       await _channel.invokeMethod('stop');
-      setState(() {
-        isRecording = false;
-      });
     } on PlatformException catch (e) {
       print("Failed to stop recording: ${e.message}");
     }
@@ -59,11 +52,14 @@ class AudioRecorderScreenState extends State<AudioRecorderScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(isRecording ? 'Recording system audio...' : 'Press to Record'),
+            ElevatedButton(
+              onPressed: _start,
+              child: Text('Start Recording'),
+            ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: isRecording ? _stop : _start,
-              child: Text(isRecording ? 'Stop Recording' : 'Start Recording'),
+              onPressed: _stop,
+              child: Text('Stop Recording'),
             ),
           ],
         ),

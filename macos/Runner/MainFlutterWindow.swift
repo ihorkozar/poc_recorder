@@ -1,6 +1,5 @@
 import Cocoa
 import FlutterMacOS
-import IOKit.ps
 import ScreenCaptureKit
 import AVFAudio
 import AVFoundation
