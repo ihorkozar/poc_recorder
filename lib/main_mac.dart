@@ -24,12 +24,12 @@ class AudioRecorderScreen extends StatefulWidget {
 }
 
 class AudioRecorderScreenState extends State<AudioRecorderScreen> {
-  static const _channel = MethodChannel('macos_audio_recorder');
+  static const _channel = MethodChannel('screenCapturePlatform');
   bool isRecording = false;
 
-  Future<void> _startRecording() async {
+  Future<void> _start() async {
     try {
-      await _channel.invokeMethod('startRecording');
+      await _channel.invokeMethod('start');
       setState(() {
         isRecording = true;
       });
@@ -38,9 +38,9 @@ class AudioRecorderScreenState extends State<AudioRecorderScreen> {
     }
   }
 
-  Future<void> _stopRecording() async {
+  Future<void> _stop() async {
     try {
-      await _channel.invokeMethod('stopRecording');
+      await _channel.invokeMethod('stop');
       setState(() {
         isRecording = false;
       });
@@ -62,7 +62,7 @@ class AudioRecorderScreenState extends State<AudioRecorderScreen> {
             Text(isRecording ? 'Recording system audio...' : 'Press to Record'),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: isRecording ? _stopRecording : _startRecording,
+              onPressed: isRecording ? _stop : _start,
               child: Text(isRecording ? 'Stop Recording' : 'Start Recording'),
             ),
           ],
