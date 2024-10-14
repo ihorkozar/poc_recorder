@@ -42,6 +42,7 @@ class MainFlutterWindow: NSWindow, SCStreamDelegate, SCStreamOutput {
         screenCaptureChannel.setMethodCallHandler { (call, result) in
             switch call.method {
             case "start":
+                print("start")
                 SCShareableContent.getExcludingDesktopWindows(true, onScreenWindowsOnly: true) { content, error in
                     if let error = error {
                         switch error {
@@ -56,6 +57,7 @@ class MainFlutterWindow: NSWindow, SCStreamDelegate, SCStreamOutput {
                     self.prepRecord()
                 }
             case "stop":
+                print("stop")
                 self.stopRecording()
             default:
                 result(FlutterMethodNotImplemented)
@@ -71,7 +73,6 @@ class MainFlutterWindow: NSWindow, SCStreamDelegate, SCStreamOutput {
         streamType = .screen
         updateAudioSettings()
         scScreen = availableContent!.displays.first
-        let excluded = availableContent?.applications.filter{app in Bundle.main.bundleIdentifier == app.bundleIdentifier}
         filter = SCContentFilter(display: scScreen ?? availableContent!.displays.first!, excludingApplications: [], exceptingWindows: [])
         Task { await record(filter: filter!) }
     }

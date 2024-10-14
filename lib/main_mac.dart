@@ -24,7 +24,7 @@ class AudioRecorderScreen extends StatefulWidget {
 }
 
 class AudioRecorderScreenState extends State<AudioRecorderScreen> {
-  static const _channel = MethodChannel('screenCapturePlatform');
+  static const _channel = MethodChannel('screenCaptureChannel');
   bool isRecording = false;
 
   Future<void> _start() async {
